@@ -1,24 +1,33 @@
-import logo from './logo.svg';
+import React, { useEffect } from 'react';
+import { ThemeProvider, useTheme } from './context/ThemeContext';
+import Navbar from './components/Navbar';
+import Content from './components/Content';
+import Footer from './components/Footer';
 import './App.css';
+
+// AppContent component to access the theme context
+const AppContent = () => {
+  const { theme } = useTheme();
+  
+  // Apply theme class to body element
+  useEffect(() => {
+    document.body.className = `${theme}-theme`;
+  }, [theme]);
+  
+  return (
+    <div className={`App theme-transition ${theme}-theme`}>
+      <Navbar />
+      <Content />
+      <Footer />
+    </div>
+  );
+};
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider>
+      <AppContent />
+    </ThemeProvider>
   );
 }
 
